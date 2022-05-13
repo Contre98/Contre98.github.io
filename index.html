@@ -11,11 +11,12 @@
 <link rel="stylesheet" href="RefugioDeGlaciares.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
-    <meta name="generator" content="Nicepage 4.8.2, nicepage.com">
+    <meta name="generator" content="Nicepage 4.10.5, nicepage.com">
     <link rel="canonical" href="Estancia turística de Ciencia y Naturaleza">
     <link rel="icon" href="images/favicon1.png">
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
     <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    
     
     
     
@@ -37,9 +38,166 @@
     <meta property="og:description" content="El Chaltén, Patagonia Argentina">
     <meta property="og:url" content="Estancia turística de Ciencia y Naturaleza">
     <meta property="og:type" content="website">
-  </head>
+  <style>
+/* The MIT License (MIT) Copyright (c) 2014 Toby */
+/* demo only */
+.flex { display: flex; }
+.align-center { justify-content: center; }
+.align-vert,.align-vert.align-center { align-items: center; }
+/* end demo */
+
+.modal { display: none; }
+.modal--show,
+.modal--hide { display: flex; } /* classes fired by js for animation control */
+
+/* This is on the wrapper for the whole modal */
+.modal--align {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+}
+
+.modal__container {
+  position: relative;
+  width: 100%;
+  max-width: 1300px;
+  padding: 20px 20px 0px 20px;
+  margin: 12px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+}
+
+/* As there is no href to avoid the hash being added to the URL when clicked we add a pointer */
+/* This 'x' is hidden from screen readers as there is an accessible close button in the modal */
+.modal__close--x:hover {
+  cursor: pointer;
+}
+
+/* Animations */
+/* Open */
+.modal.modal--show {
+  animation: modal-open 0.3s;
+}
+
+@keyframes modal-open {
+  0%    { opacity: 0; }
+  100%  { opacity: 1; }
+}
+
+/* Close */
+.modal.modal--hide {
+  animation: modal-close 0.3s;
+}
+
+@keyframes modal-close {
+  0%    { opacity: 1; }
+  100%  { opacity: 0; }
+}
+
+.modal__close--x {
+  position: absolute;
+  line-height: 19px;
+  top: 10px;
+  right: 10px; 
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  font-family: "Open Sans", "Arial","sans-serif";
+  opacity: .2;
+}
+
+.modal {
+  text-align: center;
+}
+</style>
+
+<style>
+    .modal__container [class*="section"] {
+        display: block !important;
+        overflow: hidden;
+    }
+    .modal__close--x {
+        z-index: 1;
+    }
+</style>
+
+<script>
+var buttonSelector = 'a[href*="-popup"]',
+    parseId = function (href) { return href.replace('-popup', '').replace('#', ''); };
+window.onload = function () {
+    $('body').on('click', buttonSelector, function (event) {
+        var id = parseId(event.currentTarget.getAttribute('href'));
+
+        var modalId = 'modal-' + id;
+        if ($('#' + modalId).length === 0) {
+            $('body').append('<div class="flex align-center align-vert modal modal--align" id="' + modalId + '">' +
+                '    <div class="modal__container">' +
+                '        <span class="modal__close modal__close--x" aria-hidden="true">×</span>' +
+                '        ' + document.getElementById(id).outerHTML +
+                '    </div>' +
+                '</div>');      
+        }
+        $('#' + modalId).addClass('modal--show');
+    });
+
+
+    var closeModal = function (modal) {
+        modal.removeClass('modal--show');
+        modal.addClass('modal--hide');
+
+        var afterAnimation = function () {
+            modal.removeClass('modal--hide');   
+        };
+
+        // This listens for the CSS animations to finish and then hides the modal
+        modal[0].addEventListener("webkitAnimationEnd", afterAnimation, false);
+        modal[0].addEventListener("oAnimationEnd", afterAnimation, false);
+        modal[0].addEventListener("msAnimationEnd", afterAnimation, false);
+        modal[0].addEventListener("animationend", afterAnimation, false);
+        setTimeout(afterAnimation, 400);
+    }
+
+    // Close the modal with any element with class 'modal__close'
+    $('body').on('click', '.modal__close', function (e) {
+        closeModal($(e.currentTarget).closest('.modal'));
+    });
+
+
+    // Click outside of the modal and close it
+    window.onclick = function (e) {
+        if ($(e.target).is('.modal')) {
+            closeModal($(e.target));
+        }
+    }
+
+    // Use the escape key to close modal
+    document.onkeyup = function (e) {
+        e = e || window.event;
+        if (e.keyCode == 27 && $('.modal--show').length === 1) {
+            closeModal($('.modal--show'));
+        }
+    }
+};
+
+document.addEventListener("DOMContentLoaded", function(event) {
+    var buttons = document.querySelectorAll(buttonSelector);
+    for (var i = 0; i < buttons.length; i++) {
+        var section = document.getElementById(parseId(buttons[i].getAttribute('href')));
+        if (section) {
+            section.style.display = 'none';
+        }       
+    }
+});
+</script></head>
   <body data-home-page="RefugioDeGlaciares.html" data-home-page-title="RefugioDeGlaciares" class="u-body u-xl-mode"><header class="u-clearfix u-header u-header" id="sec-e12d"><div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
-        <a href="2817921896" class="u-hidden-sm u-hidden-xs u-image u-logo u-image-1" data-image-width="74" data-image-height="74" title="Refugio de Glaciares">
+        <a href="#" class="u-hidden-sm u-hidden-xs u-image u-logo u-image-1" data-image-width="74" data-image-height="74" title="Refugio de Glaciares">
           <img src="/images/Asset4.png" class="u-logo-image u-logo-image-1">
         </a>
         <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1" data-responsive-from="MD">
@@ -72,7 +230,10 @@
           </div>
         </nav>
       </div></header> 
-    <section class="u-align-center-xs u-clearfix u-image u-shading u-section-1" id="sec-a949" data-image-width="1091" data-image-height="727">
+    <section class="u-clearfix u-image u-section-1" id="sec-c36b" data-image-width="1920" data-image-height="1081">
+      <div class="u-clearfix u-sheet u-sheet-1"></div>
+    </section>
+    <section class="u-align-center-xs u-clearfix u-image u-shading u-section-2" id="sec-a949" data-image-width="1091" data-image-height="727">
       <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-align-center-sm u-align-center-xs u-clearfix u-gutter-14 u-layout-wrap u-layout-wrap-1">
           <div class="u-layout">
@@ -103,7 +264,7 @@
         </div>
       </div>
     </section>
-    <section class="u-align-center u-clearfix u-image u-shading u-section-2" id="carousel_2eb8" data-image-width="1600" data-image-height="1059">
+    <section class="u-align-center u-clearfix u-image u-shading u-section-3" id="carousel_2eb8" data-image-width="1600" data-image-height="1059">
       <div class="u-clearfix u-sheet u-sheet-1">
         <h2 class="u-align-center-lg u-align-center-md u-align-center-sm u-align-center-xs u-align-left-xl u-custom-font u-font-raleway u-text u-text-1">PRE​​-APERTURA<br>2022
         </h2>
@@ -118,13 +279,13 @@
         <p class="u-align-center-md u-align-center-sm u-align-center-xs u-align-left-lg u-align-left-xl u-large-text u-text u-text-variant u-text-7">Es una "pre" apertura porque, si bien nuestros servicios ya están en funcionamiento, el proyecto sigue en desarrollo. Esto signfica que hay aún más novedades en c​amino.</p>
       </div>
     </section>
-    <section class="u-clearfix u-palette-1-base u-section-3" id="sec-5581">
+    <section class="u-clearfix u-palette-1-base u-section-4" id="sec-5581">
       <div class="u-clearfix u-sheet u-valign-middle-xs u-sheet-1">
         <h1 class="u-align-center u-custom-font u-font-raleway u-text u-text-default u-text-1">ACTIVIDADES<br>
         </h1>
       </div>
     </section>
-    <section class="u-clearfix u-section-4" id="sec-d948">
+    <section class="u-clearfix u-section-5" id="sec-d948">
       <div class="u-clearfix u-sheet u-sheet-1">
         <h1 class="u-align-center-sm u-align-center-xs u-align-left-lg u-align-left-md u-align-left-xl u-custom-font u-font-raleway u-text u-text-body-alt-color u-title u-text-1">
           <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-body-color u-btn-1" href="https://elchalten.com/v4/es/excursion-refugio-de-glaciares-el-chalten.php" target="_blank">DÍA DE CIENCIA</a>
@@ -378,12 +539,12 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
         </p>
       </div>
     </section>
-    <section class="u-clearfix u-palette-1-base u-section-5" id="carousel_601e">
+    <section class="u-clearfix u-palette-1-base u-section-6" id="carousel_601e">
       <div class="u-clearfix u-sheet u-valign-middle-sm u-valign-middle-xs u-sheet-1">
         <h1 class="u-align-center u-custom-font u-font-raleway u-text u-text-default u-text-1">HOSPEDATE EN NUESTRA ESTANCIA</h1>
       </div>
     </section>
-    <section class="skrollable u-align-center u-clearfix u-grey-5 u-section-6" id="sec-8ec0">
+    <section class="skrollable u-align-center u-clearfix u-grey-5 u-section-7" id="sec-8ec0">
       <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-carousel u-expanded-width-lg u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-gallery u-gallery-slider u-layout-carousel u-lightbox u-no-transition u-show-text-on-hover u-gallery-1" id="carousel-d974" data-interval="5000" data-u-ride="carousel">
           <ol class="u-absolute-hcenter u-carousel-indicators u-carousel-indicators-1">
@@ -491,14 +652,14 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
         </h4>
       </div>
     </section>
-    <section class="u-clearfix u-grey-light-2 u-typography-custom-page-typography-12--Map u-valign-top u-section-7" id="sec-7f7b">
+    <section class="u-clearfix u-grey-light-2 u-typography-custom-page-typography-12--Map u-valign-top u-section-8" id="sec-7f7b">
       <div class="u-expanded-width u-grey-light-2 u-map u-map-1">
         <div class="embed-responsive">
           <iframe class="embed-responsive-item" src="//maps.google.com/maps?output=embed&amp;q=Refugio%20de%20Glaciares%2C%20Ruta%20Provincial%2023%2C%20El%20Chalt%C3%A9n%2C%20Santa%20Cruz%20Province&amp;z=13&amp;t=k" data-map="JTdCJTIycG9zaXRpb25UeXBlJTIyJTNBJTIybWFwLWFkZHJlc3MlMjIlMkMlMjJhZGRyZXNzJTIyJTNBJTIyUmVmdWdpbyUyMGRlJTIwR2xhY2lhcmVzJTJDJTIwUnV0YSUyMFByb3ZpbmNpYWwlMjAyMyUyQyUyMEVsJTIwQ2hhbHQlQzMlQTluJTJDJTIwU2FudGElMjBDcnV6JTIwUHJvdmluY2UlMjIlMkMlMjJ6b29tJTIyJTNBMTMlMkMlMjJ0eXBlSWQlMjIlM0ElMjJzYXRlbGxpdGUlMjIlMkMlMjJsYW5nJTIyJTNBbnVsbCUyQyUyMmFwaUtleSUyMiUzQW51bGwlMkMlMjJtYXJrZXJzJTIyJTNBJTVCJTVEJTdE"></iframe>
         </div>
       </div>
     </section>
-    <section class="u-align-center u-clearfix u-grey-5 u-section-8" id="sec-ed96">
+    <section class="u-align-center u-clearfix u-grey-5 u-section-9" id="sec-ed96">
       <div class="u-clearfix u-sheet u-sheet-1">
         <h2 class="u-custom-font u-font-raleway u-text u-text-default-lg u-text-default-md u-text-default-sm u-text-default-xl u-text-1">¿Dudas? Contactanos vía</h2>
         <div class="u-social-icons u-spacing-10 u-social-icons-1">
@@ -518,7 +679,7 @@ c5.5,0,9.9,4.5,9.9,9.9V73.3z"></path></svg></span>
     <footer class="u-align-center u-clearfix u-footer u-palette-1-light-2 u-footer" id="sec-8d5e"><div class="u-clearfix u-sheet u-sheet-1">
         <img class="u-image u-image-default u-image-1" src="/images/10628795_342135555953579_6729236671042927907_o.png" alt="" data-image-width="1600" data-image-height="1466" data-href="https://www.facebook.com/redreservasprivadas/" data-target="_blank">
         <p class="u-small-text u-text u-text-variant u-text-1">
-          <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-body-color u-btn-1" href="2817921896"> Refugio de Glaciares, Ruta Provincial 23, El Chaltén, Provincia Santa Cruz</a>
+          <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-body-color u-btn-1" href="#"> Refugio de Glaciares, Ruta Provincial 23, El Chaltén, Provincia Santa Cruz</a>
         </p>
       </div></footer>
   </body>

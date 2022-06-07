@@ -12,7 +12,6 @@
   background-image: none;
   margin-top: 26px;
   margin-bottom: 0;
-  height: auto;
 }
 
 .u-section-1 .u-container-layout-1 {
@@ -70,10 +69,6 @@
 @media (max-width: 1199px) {
   .u-section-1 .u-sheet-1 {
     min-height: 909px;
-  }
-
-  .u-section-1 .u-group-1 {
-    height: auto;
   }
 
   .u-section-1 .u-container-layout-1 {

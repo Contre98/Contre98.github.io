@@ -1,5 +1,5 @@
  .u-section-1 {
-  background-image: linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("/images/DSC_26041.jpg");
+  background-image: linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("images/DSC_26041.jpg");
   background-position: 50% 46.34%;
 }
 
@@ -44,7 +44,6 @@
   background-image: none;
   margin-top: 0;
   margin-bottom: 40px;
-  height: auto;
 }
 
 .u-section-1 .u-container-layout-2 {
@@ -95,7 +94,6 @@
     min-height: 519px;
     margin-top: -11px;
     margin-bottom: 16px;
-    height: auto;
   }
 
   .u-section-1 .u-container-layout-2 {
@@ -405,6 +403,17 @@
   padding: 30px;
 }
 
+.u-section-3 .u-carousel-item-5 {
+  margin-right: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.u-section-3 .u-over-slide-5 {
+  background-image: linear-gradient(0deg, rgba(0,0,0,0.2), rgba(0,0,0,0.2));
+  padding: 30px;
+}
+
 .u-section-3 .u-carousel-control-1 {
   position: absolute;
   left: 10px;
@@ -495,10 +504,6 @@
 }
 
 @media (max-width: 991px) {
-  .u-section-3 .u-sheet-1 {
-    min-height: 714px;
-  }
-
   .u-section-3 .u-gallery-1 {
     margin-top: 131px;
     width: auto;
@@ -532,10 +537,6 @@
 }
 
 @media (max-width: 767px) {
-  .u-section-3 .u-sheet-1 {
-    min-height: 728px;
-  }
-
   .u-section-3 .u-gallery-1 {
     margin-top: 160px;
     width: auto;
@@ -571,12 +572,7 @@
 }
 
 @media (max-width: 575px) {
-  .u-section-3 .u-sheet-1 {
-    min-height: 560px;
-  }
-
   .u-section-3 .u-gallery-1 {
-    height: 237px;
     margin-top: 23px;
     width: auto;
     margin-right: initial;

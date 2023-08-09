@@ -41657,6 +41657,7 @@ a.u-link.u-text-hover-grey-90:hover {
   .u-footer .u-btn-1 {
     font-size: 0.75rem;
   }
+}
 
   .float{
     position:fixed;
@@ -41676,6 +41677,7 @@ a.u-link.u-text-hover-grey-90:hover {
   .my-float{
     margin-top:16px;
   }
+  
  /*begin-variables base-font-size*/ 
  html { font-size: 16px; }
  /*end-variables base-font-size*/
